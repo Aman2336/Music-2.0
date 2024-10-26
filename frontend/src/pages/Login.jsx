@@ -2,7 +2,7 @@ export default function Login() {
   return (
     <div className="bg-gradient-to-b from-[#1E1E2C] to-[#0D0D15] min-h-screen flex items-center justify-center">
       {/* image section */}
-      <div className="flex flex-col md:flex-row w-[100%] md:w-[100%] lg:w-[80%] xl:w-[70%] h-[80vh] bg-gray-900 text-white rounded-lg shadow-2xl overflow-hidden">
+      <div className="flex flex-col md:flex-row w-[100%] md:w-[100%] lg:w-[80%] xl:w-[70%] h-[80vh] bg-gradient-to-b from-[#1E1E2C] to-[#0D0D15] text-white rounded-lg shadow-2xl overflow-hidden">
         {/* Image Section */}
         <div className="hidden md:flex w-1/2 items-center justify-center bg-orange-400">
           <img
