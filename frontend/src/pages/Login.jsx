@@ -63,7 +63,7 @@ export default function Login() {
                 onClick={toggleLogin}
                 className="text-[#00FFAB] hover:underline text-sm"
               >
-                Signup
+                Sign up
               </button>
             </div>
           </div>
@@ -118,7 +118,7 @@ export default function Login() {
                 type="submit"
                 className="w-full bg-gradient-to-r from-[#00FFAB] to-[#00D1FF] text-gray-900 py-4 rounded-lg font-semibold hover:from-[#00D1FF] hover:to-[#00FFAB] transition transform hover:scale-105"
               >
-                Signup
+                Sign Up
               </button>
             </form>
             <div className="mt-6 flex gap-2">
