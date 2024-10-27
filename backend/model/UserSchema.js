@@ -3,23 +3,27 @@ import mongoose from "mongoose";
 const UserSchema = new mongoose.Schema(
   {
     username: {
-      type: string,
+      type: String,
       required: true,
       unique: true,
     },
     email: {
-      type: string,
+      type: String,
       required: true,
       unique: true,
     },
     password: {
-      type: string,
+      type: String,
       required: true,
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true, // Combine collection and timestamps into one object
+    collection: 'Users',
+  }
 );
 
-const User = mongoose.model("User", "UserSchema");
+// Use the correct schema reference
+const User = mongoose.model("User", UserSchema);
 
 export default User;
