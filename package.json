@@ -1,5 +1,18 @@
 {
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev" : "nodemon backend/index.js",
+    "start" :"node backend/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "styled-components": "^6.1.13"
+    "express": "^4.21.1",
+    "nodemon": "^3.1.7"
   }
 }

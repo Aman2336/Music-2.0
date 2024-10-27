@@ -9,7 +9,7 @@ export default function Login() {
   return (
     <div className="bg-gradient-to-b from-[#1E1E2C] to-[#0D0D15] min-h-screen flex items-center justify-center relative">
       {/* Wrapper for both sections */}
-      <div className="absolute flex flex-col md:flex-row w-[100%] md:w-[100%] lg:w-[90%] xl:w-[90%] h-[90vh] bg-gradient-to-b from-[#1E1E2C] to-[#0D0D15] text-white rounded-lg shadow-2xl overflow-hidden">
+      <div className="absolute flex flex-col md:flex-row w-[100%] md:w-[100%] lg:w-[90%] xl:w-[90%] h-[90vh] bg-gradient-to-b from-[#1E1E2C] to-[#0D0D15] text-white rounded-lg shadow-[#12121c] shadow-2xl overflow-hidden">
         {/* Login Section */}
         <div
           className={`absolute inset-0 flex md:flex-row items-center transition-all duration-700 ease-in-out ${
@@ -24,14 +24,14 @@ export default function Login() {
             <img
               src="/public/images/08.jpg"
               alt="Login Moodify"
-              className="w-full h-full "
+              className="w-full h-full object-cover "
             />
           </div>
 
           {/* Login Form */}
           <div className="w-full md:w-1/2 p-10">
-            <h1 className="text-5xl font-bold text-center mb-8">
-              Moodify - Login
+            <h1 className="text-5xl font-semibold mb-10">
+              Login
             </h1>
             <form className="space-y-6">
               <div>
@@ -58,7 +58,7 @@ export default function Login() {
               </button>
             </form>
             <div className="mt-6 flex gap-2">
-              <p>Don't have an account?</p>
+              <p>Don`t have an account?</p>
               <button
                 onClick={toggleLogin}
                 className="text-[#00FFAB] hover:underline text-sm"
@@ -86,8 +86,8 @@ export default function Login() {
 
           {/* Signup Form */}
           <div className="w-full md:w-1/2 p-10">
-            <h1 className="text-5xl font-bold text-center mb-8">
-              Moodify - Signup
+            <h1 className="text-5xl font-semibold mb-10">
+              Create an Account
             </h1>
             <form className="space-y-6">
               <div>
