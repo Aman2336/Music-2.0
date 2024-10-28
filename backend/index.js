@@ -25,3 +25,14 @@ app.listen(3000, () => {
 // adding middlewares
 app.use("/backend/user", UserRouter);
 app.use("/backend/auth", authRouter);
+
+//error handler middleware
+app.use((err, req, res, next) => {
+  const statuscode = err.statuscode || 500;
+  const message = err.message || "internal server error";
+  return res.status(statuscode).json({
+    success: false,
+    statuscode,
+    message,
+  });
+});

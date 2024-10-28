@@ -1,6 +1,8 @@
 import User from "../model/UserSchema.js";
 import jwt from "jsonwebtoken";
 import bcryptjs from "bcryptjs";
+import { errorhandler } from "../utils/error.js";
+
 export const login = (req, res) => {};
 
 export const signup = async (req, res, next) => {
@@ -11,6 +13,6 @@ export const signup = async (req, res, next) => {
     await newUser.save();
     res.status(201).json("User created Successfully");
   } catch (err) {
-    console.log(err);
+    next(errorhandler(500, "error"));
   }
 };
