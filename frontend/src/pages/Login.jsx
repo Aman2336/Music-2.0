@@ -1,9 +1,12 @@
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 export default function Login() {
   const [login, setLogin] = useState(true); // Track the mode (login or signup)
   const [error, seterror] = useState(null);
   const [loading, setloading] = useState(false);
+
+  const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState(""); // "success" or "error"
 
   // Toggle between login and signup views
   const toggleLogin = () => setLogin(!login);
@@ -47,18 +50,50 @@ export default function Login() {
       const data = await res.json();
       if (data.success === false) {
         setloading(false);
-        seterror(error.message);
+        seterror(data.message || "Signup failed!");
+        setMessageType("error");
+        setMessage("Signup failed!");
         return;
       }
+
       setloading(false);
+      seterror(null);
+      setMessageType("success");
+      setMessage("Signup successful!");
+
+      // Redirect to login view after success
+      setTimeout(() => {
+        toggleLogin(); // Switch to login view
+      }, 1000);
       console.log(data);
     } catch (error) {
       setloading(false);
       seterror(error.message);
+      setMessageType("error");
+      setMessage(error.message);
     }
   };
+
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setMessage("");
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
+
   return (
     <div className="bg-gradient-to-b from-[#1E1E2C] to-[#0D0D15] min-h-screen flex items-center justify-center relative">
+      {message && (
+        <div
+          className={`fixed top-5 right-5 p-4 rounded-lg shadow-lg ${
+            messageType === "success" ? "bg-green-500" : "bg-red-500"
+          } text-white z-50`}
+        >
+          {message}
+        </div>
+      )}
       {/* Wrapper for both sections */}
       <div className="absolute flex flex-col md:flex-row w-[100%] md:w-[100%] lg:w-[90%] xl:w-[90%] h-[90vh] bg-gradient-to-b from-[#1E1E2C] to-[#0D0D15] text-white rounded-lg shadow-[#12121c] shadow-2xl overflow-hidden">
         {/* Login Section */}
