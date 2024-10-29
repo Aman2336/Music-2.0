@@ -14,3 +14,27 @@ export const signup = async (req, res, next) => {
     next(errorhandler(500, "error"));
   }
 };
+
+export const login = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    const validuser = await User.findOne({ email });
+    if (!validuser) {
+      return next(errorhandler(404, "Invalid User"));
+    }
+    const validpassword = bcryptjs.compareSync(password, validuser.password);
+    if (!validpassword) {
+      return next(errorhandler(406, "Incorrect Credentials"));
+    }
+
+    const token = jwt.sign({ id: validuser._id }, process.env.jwt_secret);
+    const { password: pass, ...rest } = validuser._doc;
+
+    res
+      .cookie("access_token", token, { httpOnly: true })
+      .status(200)
+      .json(rest);
+  } catch (error) {
+    next(error);
+  }
+};

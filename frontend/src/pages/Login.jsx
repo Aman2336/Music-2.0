@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import styles from "../styles/Message.module.css";
+
 export default function Login() {
   const [login, setLogin] = useState(true); // Track the mode (login or signup)
   const [error, seterror] = useState(null);
@@ -70,7 +71,7 @@ export default function Login() {
       setloading(false);
       seterror(error.message);
       setMessageType("error");
-      setMessage(error.message);
+      setMessage("Invalid Credentials or Fill all the fields");
     }
   };
 
@@ -87,13 +88,16 @@ export default function Login() {
     <div className="bg-gradient-to-b from-[#1E1E2C] to-[#0D0D15] min-h-screen flex items-center justify-center relative">
       {message && (
         <div
-          className={`fixed top-5 right-5 p-4 rounded-lg shadow-lg ${
-            messageType === "success" ? "bg-green-500" : "bg-red-500"
-          } text-white z-50`}
+          className={`fixed top-5 right-5 p-4 rounded-lg shadow-lg border-2 ${
+            messageType === "success"
+              ? "bg-gradient-to-b from-[#1E1E2C] to-[#0D0D15] border-green-600 "
+              : "bg-gradient-to-b from-[#1E1E2C] to-[#0D0D15] border-red-600"
+          } text-white z-50 animate-slide-in`}
         >
           {message}
         </div>
       )}
+
       {/* Wrapper for both sections */}
       <div className="absolute flex flex-col md:flex-row w-[100%] md:w-[100%] lg:w-[90%] xl:w-[90%] h-[90vh] bg-gradient-to-b from-[#1E1E2C] to-[#0D0D15] text-white rounded-lg shadow-[#12121c] shadow-2xl overflow-hidden">
         {/* Login Section */}
@@ -220,7 +224,6 @@ export default function Login() {
                 Login
               </button>
             </div>
-            {error && <p className="text-red-600 mt-5">{error}</p>}
           </div>
         </div>
       </div>
