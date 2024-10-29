@@ -3,11 +3,13 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import UserRouter from "./routes/UserRoutes.js";
 import authRouter from "./routes/authRoutes.js";
+import cors from "cors";
 
 dotenv.config();
 
 const app = express();
-
+app.use(express.json());
+app.use(cors());
 mongoose
   .connect(process.env.mongo)
   .then(() => {
@@ -17,7 +19,6 @@ mongoose
     console.error("MongoDB connection error:", error);
   });
 
-app.use(express.json());
 app.listen(3000, () => {
   console.log("Server is running on port 3000!");
 });
