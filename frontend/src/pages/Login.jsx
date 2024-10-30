@@ -1,7 +1,15 @@
 import { useState, useEffect } from "react";
-import styles from "../styles/Message.module.css";
-
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  loginstart,
+  loginfailure,
+  loginsuccess,
+} from "../redux/user/userSlice.js";
 export default function Login() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [login, setLogin] = useState(true); // Track the mode (login or signup)
   const [error, seterror] = useState(null);
   const [loading, setloading] = useState(false);
@@ -84,6 +92,57 @@ export default function Login() {
     }
   }, [message]);
 
+  //login functionality
+  const [loginformdata, setloginformdata] = useState({});
+
+  const handleloginchange = (e) => {
+    setloginformdata({
+      ...loginformdata,
+      [e.target.id]: e.target.value, //here spread is use to add or update the current object
+    });
+  };
+
+  const { loginloading, loginerror } = useSelector((state) => state.user);
+  const handleloginsubmit = async (e) => {
+    e.preventDefault();
+    dispatch(loginstart());
+    try {
+      const res = await fetch("/backend/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(loginformdata),
+      });
+
+      // Check if the response is OK (status in the range 200–299)
+      if (!res.ok) {
+        throw new Error(`HTTP error! Status: ${res.status}`);
+      }
+
+      // Attempt to parse JSON only if there's a valid response body
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(loginfailure(data.message));
+        setMessageType("error");
+        setMessage("Login failed!");
+        return;
+      }
+
+      dispatch(loginsuccess(data));
+      setMessageType("success");
+      setMessage("Login successful!");
+
+      // Redirect to login view after success
+      navigate("/");
+      console.log(data);
+    } catch (error) {
+      dispatch(loginfailure(error.message));
+      setMessageType("error");
+      setMessage("Invalid Credentials");
+    }
+  };
+
   return (
     <div className="bg-gradient-to-b from-[#1E1E2C] to-[#0D0D15] min-h-screen flex items-center justify-center relative">
       {message && (
@@ -121,12 +180,13 @@ export default function Login() {
           {/* Login Form */}
           <div className="w-full md:w-1/2 p-10">
             <h1 className="text-5xl font-semibold mb-10">Login</h1>
-            <form className="space-y-6">
+            <form onSubmit={handleloginsubmit} className="space-y-6">
               <div>
                 <label className="block mb-2">Email</label>
                 <input
                   type="email"
                   id="email"
+                  onChange={handleloginchange}
                   placeholder="Enter your email"
                   className="w-full p-4 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-[#00FFAB]"
                 />
@@ -134,7 +194,9 @@ export default function Login() {
               <div>
                 <label className="block mb-2">Password</label>
                 <input
+                  onChange={handleloginchange}
                   type="password"
+                  id="password"
                   placeholder="Enter your password"
                   className="w-full p-4 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-[#00FFAB]"
                 />
@@ -143,7 +205,7 @@ export default function Login() {
                 type="submit"
                 className="w-full bg-gradient-to-r from-[#00FFAB] to-[#00D1FF] text-gray-900 py-4 rounded-lg font-semibold hover:from-[#00D1FF] hover:to-[#00FFAB] transition transform hover:scale-105"
               >
-                Login
+                {loginloading ? "Loading.." : "Login"}
               </button>
             </form>
             <div className="mt-6 flex gap-2">
