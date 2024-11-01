@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 
 import UserRouter from "./routes/UserRoutes.js";
 import authRouter from "./routes/authRoutes.js";
+import spotifyRouter from "./routes/spotifyRoutes.js"
 import cors from "cors";
 
 dotenv.config();
@@ -27,6 +28,7 @@ app.listen(3000, () => {
 // adding middlewares
 app.use("/backend/user", UserRouter);
 app.use("/backend/auth", authRouter);
+app.use("/backend/spotify", spotifyRouter);
 
 //error handler middleware
 app.use((err, req, res, next) => {
