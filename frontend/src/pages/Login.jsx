@@ -6,6 +6,7 @@ import {
   loginfailure,
   loginsuccess,
 } from "../redux/user/userSlice.js";
+import Oauth from "../components/Oauth/Oauth.jsx";
 export default function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -208,6 +209,7 @@ export default function Login() {
                 {loginloading ? "Loading.." : "Login"}
               </button>
             </form>
+            <Oauth />
             <div className="mt-6 flex gap-2">
               <p>Don`t have an account?</p>
               <button
@@ -277,6 +279,7 @@ export default function Login() {
                 {loading ? "Loading.." : "Sign Up"}
               </button>
             </form>
+            <Oauth />
             <div className="mt-6 flex gap-2">
               <p>Already have an account?</p>
               <button

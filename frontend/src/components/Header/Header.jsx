@@ -15,8 +15,8 @@ export default function Header() {
     if (!query) return;
     try {
       const response = await axios.get(`/backend/spotify/search?q=${query}`); // API call to search tracks and artists
-      setResults(response.data);
-      console.log(response.data); // Update results state with response data
+      setResults(response.data); // Update results state with response data
+      console.log(response.data);
     } catch (error) {
       console.error("Error fetching search results:", error);
     }
