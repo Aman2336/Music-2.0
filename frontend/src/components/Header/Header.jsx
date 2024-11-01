@@ -1,6 +1,27 @@
 import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
 export default function Header() {
+  const [query, setquery] = useState("");
+  const [results, setResults] = useState([]);
+
+  const handlechange = (e) => {
+    setquery(e.target.value); // Update the query state on input change
+  };
+
+  const handlesearch = async (e) => {
+    e.preventDefault();
+    if (!query) return;
+    try {
+      const response = await axios.get(`/backend/spotify/search?q=${query}`); // API call to search tracks and artists
+      setResults(response.data);
+      console.log(response.data); // Update results state with response data
+    } catch (error) {
+      console.error("Error fetching search results:", error);
+    }
+  };
+
   return (
     <header className="bg-[#1E1E2C] shadow-md">
       <div className="text-[#EAEAEA] flex justify-between items-center max-w-7xl mx-auto p-3">
@@ -9,13 +30,17 @@ export default function Header() {
 
         {/* Search bar */}
 
-        <form className="p-3 rounded-lg flex items-center w-full max-w-lg">
+        <form
+          onSubmit={handlesearch}
+          className="p-3 rounded-lg flex items-center w-full max-w-lg"
+        >
           <input
+            onChange={handlechange}
             type="text"
             placeholder="Search for songs, artists..."
             className="bg-transparent focus:outline-none w-full lg:w-full border-b-2 p-2"
           />
-          <button>
+          <button type="submit">
             <FaSearch className="text-[#EAEAEA]" />
           </button>
 
