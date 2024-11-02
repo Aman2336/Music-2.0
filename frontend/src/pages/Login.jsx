@@ -279,7 +279,7 @@ export default function Login() {
                 {loading ? "Loading.." : "Sign Up"}
               </button>
             </form>
-            <Oauth />
+            <Oauth id="signup" />
             <div className="mt-6 flex gap-2">
               <p>Already have an account?</p>
               <button
