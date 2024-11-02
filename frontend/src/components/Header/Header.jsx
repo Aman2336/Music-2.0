@@ -1,8 +1,10 @@
 import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import axios from "axios";
 export default function Header() {
+  const currentUser = useSelector((state) => state.user);
   const [query, setquery] = useState("");
   const [results, setResults] = useState([]);
 
@@ -57,8 +59,18 @@ export default function Header() {
           <Link to="/about">
             <li className="hover:text-[#8A2BE2] transition-colors">About</li>
           </Link>
-          <Link to="/login">
-            <li className="hover:text-[#00C9A7] transition-colors">Sign In</li>
+          <Link to="/profile">
+            {currentUser ? (
+              <img
+                className="w-7 h-7 rounded-full object-cover"
+                src={currentUser.avatar}
+                alt="Profile"
+              />
+            ) : (
+              <li className="hover:text-[#00C9A7] transition-colors">
+                Sign In
+              </li>
+            )}
           </Link>
         </ul>
       </div>
