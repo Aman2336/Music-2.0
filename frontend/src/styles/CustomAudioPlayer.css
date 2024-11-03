@@ -1,60 +1,109 @@
 .audio-player-card {
-    width: 280px;
-    padding: 20px;
-    background: linear-gradient(to bottom, #2C2C3A, #1E1E2C);
-    border-radius: 20px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-    text-align: center;
-    font-family: Arial, sans-serif;
-    color: #EAEAEA;
+  width: 100%;
+  max-width: 300px; /* Set a maximum width for better responsiveness */
+  padding: 20px;
+  background: linear-gradient(to bottom, #2C2C3A, #1E1E2C);
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  font-family: Arial, sans-serif;
+  color: #EAEAEA;
+  margin: auto;
+}
+
+.track-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  border: 2px solid #353545;
+}
+
+.track-info {
+  margin-bottom: 10px;
+}
+
+.track-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin: 0;
+  color: #FFFFFF;
+}
+
+.track-artist {
+  font-size: 0.9em;
+  color: #A0A0A0;
+}
+
+.custom-audio-player {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.custom-audio-player .rhap_time,
+.custom-audio-player .rhap_progress-bar {
+  color: #FFFFFF;
+}
+
+.custom-audio-player .rhap_progress-filled {
+  background-color: #ff7675;
+}
+
+.custom-audio-player .rhap_button-clear {
+  color: #FFFFFF;
+  font-size: 1.5em;
+}
+
+.custom-audio-player .rhap_button-clear:hover {
+  color: #ff7675;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .audio-player-card {
+    width: 90%;
+    padding: 15px;
   }
-  
+
   .track-image {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    border: 2px solid #353545;
+    width: 80px;
+    height: 80px;
   }
-  
-  .track-info {
-    margin-bottom: 10px;
-  }
-  
+
   .track-title {
-    font-size: 1.2em;
-    font-weight: bold;
-    margin: 0;
-    color: #FFFFFF;
+    font-size: 1.1em;
   }
-  
+
   .track-artist {
-    font-size: 0.9em;
-    color: #A0A0A0;
+    font-size: 0.85em;
   }
-  
-  .custom-audio-player {
-    background-color: transparent;
-    box-shadow: none;
-  }
-  
-  .custom-audio-player .rhap_time,
-  .custom-audio-player .rhap_progress-bar {
-    color: #FFFFFF;
-  }
-  
-  .custom-audio-player .rhap_progress-filled {
-    background-color: #ff7675;
-  }
-  
+
   .custom-audio-player .rhap_button-clear {
-    color: #FFFFFF;
-    font-size: 1.5em;
+    font-size: 1.2em;
   }
-  
-  .custom-audio-player .rhap_button-clear:hover {
-    color: #ff7675;
+}
+
+@media (max-width: 480px) {
+  .audio-player-card {
+    padding: 10px;
   }
-  
+
+  .track-image {
+    width: 60px;
+    height: 60px;
+  }
+
+  .track-title {
+    font-size: 1em;
+  }
+
+  .track-artist {
+    font-size: 0.8em;
+  }
+
+  .custom-audio-player .rhap_button-clear {
+    font-size: 1em;
+  }
+}
