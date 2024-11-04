@@ -17,7 +17,7 @@ export const signup = async (req, res, next) => {
 
 export const login = async (req, res, next) => {
   try {
-    const { email, password, photoURL } = req.body;
+    const { email, password } = req.body;
     const validuser = await User.findOne({ email });
     if (!validuser) {
       return next(errorhandler(404, "Invalid User"));
@@ -41,55 +41,44 @@ export const login = async (req, res, next) => {
 
 // export const google = async (req, res, next) => {
 //   try {
-//     const { email, name, photoURL } = req.body;
-
-//     if (!email) {
-//       return res.status(400).json({ message: "Email is required for Google authentication." });
-//     }
-
-//     const validuser = await User.findOne({ email });
-
-//     if (validuser) {
-//       const token = jwt.sign({ id: validuser._id }, process.env.jwt_secret);
-//       const { password: pass, ...rest } = validuser._doc;
+//     const user = await User.findOne({ email: req.body.email });
+//     if (user) {
+//       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+//       const { password: pass, ...rest } = user._doc;
 //       res
-//         .cookie("access_token", token, { httpOnly: true })
+//         .cookie('access_token', token, { httpOnly: true })
 //         .status(200)
 //         .json(rest);
 //     } else {
-//       const generatedpassword = Math.random().toString(36).slice(-8);
-//       const hashpassword = bcryptjs.hashSync(generatedpassword, 10);
-
-//       const username = name
-//         ? name.split(" ").join("").toLowerCase() + Math.random().toString(36).slice(-4)
-//         : `user${Math.random().toString(36).slice(-6)}`; // Default if `name` is missing
-
-//       const newuser = new User({
-//         username,
-//         email,
-//         password: hashpassword,
-//         avatar: photoURL || "", // Default to an empty string if `photo` is missing
+//       const generatedPassword =
+//         Math.random().toString(36).slice(-8) +
+//         Math.random().toString(36).slice(-8);
+//       const hashedPassword = bcryptjs.hashSync(generatedPassword, 10);
+//       const newUser = new User({
+//         username:
+//           req.body.name.split(' ').join('').toLowerCase() +
+//           Math.random().toString(36).slice(-4),
+//         email: req.body.email,
+//         password: hashedPassword,
+//         avatar: req.body.photo,
 //       });
-
-//       await newuser.save();
-//       const token = jwt.sign({ id: newuser._id }, process.env.jwt_secret);
-//       const { password: pass, ...rest } = newuser._doc;
-
+//       await newUser.save();
+//       const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
+//       const { password: pass, ...rest } = newUser._doc;
 //       res
-//         .cookie("access_token", token, { httpOnly: true })
+//         .cookie('access_token', token, { httpOnly: true })
 //         .status(200)
 //         .json(rest);
 //     }
-//   } catch (err) {
-//     next(err);
+//   } catch (error) {
+//     next(error);
 //   }
 // };
-
 export const google = async (req, res, next) => {
   try {
     // console.log("Request Body:", req.body); // Log the request body to inspect received data
 
-    const { email, name, photo, picture } = req.body; // Extract 'picture' in case it's used instead of 'photo'
+    const { email, name, photo } = req.body; // Extract 'picture' in case it's used instead of 'photo'
 
     if (!email) {
       return res
@@ -120,10 +109,7 @@ export const google = async (req, res, next) => {
         email,
         password: hashpassword,
         // Use 'photo' if available; otherwise, try 'picture'; fallback to default if both are missing
-        avatar:
-          photo ||
-          picture ||
-          "https://static-00.iconduck.com/assets.00/profile-default-icon-2048x2045-u3j7s5nj.png",
+        photo: photo,
       });
 
       await newuser.save();

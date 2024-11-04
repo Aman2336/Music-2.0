@@ -27,16 +27,17 @@
 //   };
 
 import { FaSearch } from "react-icons/fa";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 export default function Header() {
-  const currentUser = useSelector((state) => state.user);
+  const {currentUser} = useSelector((state) => state.user);
   const [query, setquery] = useState("");
   const [results, setResults] = useState([]);
   const navigate = useNavigate();
-
+  console.log(currentUser);
+  console.log("current user photo ", currentUser.photo);
   const handlechange = (e) => {
     setquery(e.target.value); // Update the query state on input change
   };
@@ -91,11 +92,7 @@ export default function Header() {
           </Link>
           <Link to="/profile">
             {currentUser ? (
-              <img
-                className="w-7 h-7 rounded-full object-cover"
-                src={currentUser.avatar}
-                alt="Profile"
-              />
+              <img src={currentUser.photo} alt="Profile" />
             ) : (
               <li className="hover:text-[#00C9A7] transition-colors">
                 Sign In
@@ -160,7 +157,6 @@ export default function Header() {
 //     </header>
 //   );
 // }
-
 
 // import { FaSearch } from "react-icons/fa";
 // import { Link, useNavigate } from "react-router-dom";
