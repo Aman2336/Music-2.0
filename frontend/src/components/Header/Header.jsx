@@ -31,13 +31,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { current } from "@reduxjs/toolkit";
 export default function Header() {
-  const {currentUser} = useSelector((state) => state.user);
+  const { currentUser } = useSelector((state) => state.user);
   const [query, setquery] = useState("");
   const [results, setResults] = useState([]);
   const navigate = useNavigate();
   console.log(currentUser);
-  console.log("current user photo ", currentUser.photo);
+  // console.log("current user photo ", currentUser.currentUser.photo);
   const handlechange = (e) => {
     setquery(e.target.value); // Update the query state on input change
   };
@@ -91,8 +92,12 @@ export default function Header() {
             <li className="hover:text-[#8A2BE2] transition-colors">About</li>
           </Link>
           <Link to="/profile">
-            {currentUser ? (
-              <img src={currentUser.photo} alt="Profile" />
+            {currentUser?.photo ? (
+              <img
+                className="object-cover w-8 h-8 rounded-lg "
+                src={currentUser.photo}
+                alt="profile"
+              />
             ) : (
               <li className="hover:text-[#00C9A7] transition-colors">
                 Sign In
