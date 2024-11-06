@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Home() {
   return (
     <div className="bg-gradient-to-b from-[#1E1E2C] to-[#0D0D15] min-h-screen p-5 flex flex-col items-center">
@@ -15,7 +17,11 @@ export default function Home() {
 
       {/* Example of additional content or features */}
       <div className="mt-8 text-center">
-        <h2 className="text-[#EAEAEA] text-2xl mb-2">Featured Artists</h2>
+        <h2 className="text-[#EAEAEA] text-2xl mb-2">Mood Detector</h2>
+
+        <Link to="/song-recommend">
+          <button className="text-white">test</button>
+        </Link>
         {/* Add artist cards or other components here */}
       </div>
     </div>

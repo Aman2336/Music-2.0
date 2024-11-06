@@ -6,6 +6,7 @@ import Footer from "./components/Footer/Footer";
 import SearchResults from "./pages/SearchResults.jsx";
 import Profile from "./pages/Profile.jsx";
 import PrivateRoute from "../routes/PrivateRoute.jsx";
+import SongRec from "./pages/SongRec.jsx";
 export default function App() {
   return (
     <BrowserRouter>
@@ -16,6 +17,7 @@ export default function App() {
         <Route path="/results" element={<SearchResults />}></Route>
         <Route element={<PrivateRoute />}>
           <Route path="/profile" element={<Profile />}></Route>
+          <Route path="/song-recommend" element={<SongRec />}></Route>
         </Route>
       </Routes>
       <Footer />
