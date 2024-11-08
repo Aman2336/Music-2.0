@@ -33,7 +33,7 @@ app.listen(3000, () => {
 app.use("/backend/user", UserRouter);
 app.use("/backend/auth", authRouter);
 app.use("/backend/spotify", spotifyRouter);
-app.use("/backend/mood", moodRouter);
+
 //error handler middleware
 app.use((err, req, res, next) => {
   const statuscode = err.statuscode || 500;

@@ -7,28 +7,6 @@ export default function MoodDetection() {
   const [mood, setMood] = useState(null);
   const [emotions, setEmotions] = useState({});
 
-  // const handleCapture = async (imageBlob) => {
-  //   // Prepare FormData with the image blob
-  //   const formData = new FormData();
-  //   formData.append("image", imageBlob, "capture.jpg");
-
-  //   try {
-  //     // Send the form data to the backend
-  //     const response = await fetch("/backend/mood/detect", {
-  //       method: "POST",
-  //       body: formData,
-  //     });
-
-  //     if (response.ok) {
-  //       console.log("Image uploaded successfully");
-  //     } else {
-  //       console.error("Failed to upload image");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error uploading image:", error);
-  //   }
-  // };
-
   const handleCapture = async (imageBlob) => {
     // Prepare FormData with the image blob
     const formData = new FormData();
@@ -55,25 +33,9 @@ export default function MoodDetection() {
     }
   };
 
-  // const handleCapture = async (imageData) => {
-  //   console.log(imageData);
-  //   try {
-  //     const response = await axios.post(
-  //       "/backend/mood/detect",
-  //       { image: imageData },  // Data to send
-  //       { headers: {            // Configuration object containing headers
-  //         'Content-Type': 'application/json',  // Ensure you're sending JSON
-  //       }}
-  //     );
-  //     setMood(response.data.mood);
-  //     setEmotions(response.data.emotions);
-  //   } catch (error) {
-  //     console.error("Error detecting mood:", error);
-  //   }
-  // };
   return (
-    <div className="mood-detection-page">
-      <h2>Detect Your Mood</h2>
+    <div className=" flex flex-col bg-gradient-to-b from-[#1E1E2C] to-[#0D0D15] min-h-screen items-center gap-5 ">
+      <h1 className="font-semibold text-4xl text-white">Detect Your Mood</h1>
       <CameraCapture onCapture={handleCapture} />
       {mood && <MoodResultCard mood={mood} emotions={emotions} />}
     </div>
