@@ -5,7 +5,6 @@ import dotenv from "dotenv";
 import UserRouter from "./routes/UserRoutes.js";
 import authRouter from "./routes/authRoutes.js";
 import spotifyRouter from "./routes/spotifyRoutes.js";
-import moodRouter from "./routes/moodDetect.js";
 import cors from "cors";
 
 dotenv.config();
