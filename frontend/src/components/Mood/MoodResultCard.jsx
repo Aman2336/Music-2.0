@@ -1,73 +1,3 @@
-// import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-// import "react-circular-progressbar/dist/styles.css";
-// import "../../styles/moodResult.css";
-// import{ useState,useEffect}  from "react";
-
-// // Import your custom CSS file
-
-// export default function MoodResultCard({ mood, emotions }) {
-//   const [animatedPercentage, setAnimatedPercentage] = useState(0);
-//   // Calculate the total sum of all emotion scores
-//   const totalScore = Object.values(emotions).reduce(
-//     (sum, score) => sum + score,
-//     0
-//   ); // since we are getting object of emotion
-//   //we are calculating total score of all the emotions to find percentage
-
-//   // Convert emotion scores to percentages
-//   const emotionPercentages = Object.fromEntries(
-//     Object.entries(emotions).map(([emotion, score]) => {
-//       const percentage = (score / totalScore) * 100;
-//       return [emotion, percentage];
-//     })
-//   );
-
-//   // Find the dominant emotion
-//   const dominantEmotion = Object.entries(emotionPercentages).reduce(
-//     (max, [emotion, percentage]) =>
-//       percentage > max.percentage ? { emotion, percentage } : max,
-//     { emotion: "", percentage: 0 }
-//   );
-
-//   //filtering dominant emotion
-
-//   useEffect(() => {
-//     const timer = setTimeout(() => {
-//       setAnimatedPercentage(dominantEmotion.percentage);
-//     }, 500); // Delay before starting the animation (in milliseconds)
-
-//     return () => clearTimeout(timer);
-//   }, [dominantEmotion.percentage]);
-
-//   return (
-//     <div className="mood-result-card">
-//       <div className="emotions">
-//         {Object.entries(emotionPercentages).map(([emotion, percentage]) => (
-//           <p key={emotion}>
-//             {emotion}: {percentage.toFixed(1)}%
-//           </p>
-//         ))}
-//       </div>
-
-//       {/* Displaying the speedometer for dominant emotion */}
-//       <div className="speedometer">
-//         <h4>Dominant Emotion: {dominantEmotion.emotion}</h4>
-//         <CircularProgressbar
-//           value={dominantEmotion.percentage} // Use the dominant emotion's percentage
-//           text={`${dominantEmotion.percentage.toFixed(1)}%`} // Show percentage inside the circle
-//           styles={buildStyles({
-//             pathTransition: "stroke-dashoffset 1s ease 0s",
-//             pathColor: "#00FFAB", // Customize path color
-//             textColor: "#00D1FF", // Customize text color
-//             trailColor: "#eee", // Customize the trail color
-//             strokeWidth: 12, // Customize stroke width
-//             textSize: "16px", // Customize text size
-//           })}
-//         />
-//       </div>
-//     </div>
-//   );
-// }
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import "../../styles/moodResult.css";
@@ -95,7 +25,11 @@ const emotionIcons = {
 
 // Import your custom CSS file
 
-export default function MoodResultCard({ mood, emotions }) {
+export default function MoodResultCard({
+  mood,
+  emotions,
+  onDominantMoodDetected,
+}) {
   const emotionEmojis = {
     angry: "😡",
     disgust: "🤢",
@@ -109,6 +43,7 @@ export default function MoodResultCard({ mood, emotions }) {
   const [animatedPercentage, setAnimatedPercentage] = useState(0);
   const cardRef = useRef(null);
   const [isInView, setIsInView] = useState(false);
+  const [results, setresults] = useState({});
 
   // Calculate the total sum of all emotion scores
   const totalScore = Object.values(emotions).reduce(
@@ -153,6 +88,11 @@ export default function MoodResultCard({ mood, emotions }) {
       }
     };
   }, []);
+  useEffect(() => {
+    if (dominantEmotion.emotion) {
+      onDominantMoodDetected(dominantEmotion.emotion); // Notify parent component
+    }
+  }, [dominantEmotion, onDominantMoodDetected]);
 
   useEffect(() => {
     if (isInView) {

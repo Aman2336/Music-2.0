@@ -1,0 +1,48 @@
+.tracks-section {
+  width: 100%;
+  max-width: 500px; /* Maximum width */
+  min-width: 280px; /* Minimum width */
+  background: linear-gradient(to bottom, #2a2a3a, #2c2c3a);
+  padding: 1.5rem;
+  border-radius: 0 20px 20px 0; /* Rounded on the right side */
+  animation: slide-in-left 0.8s ease-in-out forwards;
+  overflow-y: auto;
+}
+
+.media-player-section {
+  width: 100%;
+  max-width: 500px; /* Maximum width */
+  min-width: 280px; /* Minimum width */
+  background: linear-gradient(to bottom, #2a2a3a, #2c2c3a);
+  padding: 1.5rem;
+  border-radius: 20px 0 0 20px; /* Rounded on the left side */
+  animation: slide-in-right 0.8s ease-in-out forwards;
+}
+
+@keyframes slide-in-left {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-right {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.tracks-media-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 16px; /* Space between the sections */
+  margin-top: 1.5rem; /* Space after the MoodResultCard */
+  width: 100%; /* Ensure the wrapper takes up the full width */
+  max-width: 1200px; /* Limit the width of the entire section */
+  margin: 0 auto; /* Center the wrapper horizontally */
+}
