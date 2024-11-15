@@ -1,12 +1,15 @@
 import { MdSkipNext } from "react-icons/md";
 import { AiOutlineHeart } from "react-icons/ai";
 import { useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useState ,useEffect} from "react";
 import axios from "axios";
 import AudioPlayerCard from "../components/Audio Player/AudioPlayerCard";
 import "react-h5-audio-player/lib/styles.css";
+import { useSelector } from "react-redux";
 
 export default function SearchResults() {
+  const { currentUser } = useSelector((state) => state.user);
+  const currentUserId = currentUser?._id;
   const location = useLocation();
   const results = location.state?.results || {};
   const [currentTrack, setCurrentTrack] = useState(null);
@@ -52,6 +55,63 @@ export default function SearchResults() {
       setCurrentTrackIndex(0); // Reset track index
     } catch (error) {
       console.error("Error selecting artist:", error.message);
+    }
+  };
+  const [likedSongs, setLikedSongs] = useState([]);
+  const isTrackLiked =
+    currentTrack && likedSongs.some((song) => song.trackId === currentTrack.id);
+
+  useEffect(() => {
+    const fetchLikedSongs = async () => {
+      try {
+        const response = await axios.get(
+          `/backend/user/liked-songs/${currentUserId}`
+        );
+        setLikedSongs(response.data.likedSongs); // Populate the liked songs from the backend
+      } catch (error) {
+        console.error("Error fetching liked songs:", error);
+      }
+    };
+
+    if (currentUserId) {
+      fetchLikedSongs();
+    }
+  }, [currentUserId]);
+
+  const handlelikedclick = async (track) => {
+    console.log("Current User ID:", currentUserId);
+    try {
+      if (isTrackLiked) {
+        // Remove from liked songs
+        const response = await axios.post("/backend/user/remove-like", {
+          userId: currentUserId,
+          trackId: track.id,
+        });
+
+        setLikedSongs(likedSongs.filter((song) => song.trackId !== track.id));
+        console.log(response.data.message);
+      } else {
+        const response = await axios.post("/backend/user/like-song", {
+          userId: currentUserId, // Replace with the actual logged-in user ID
+          song: {
+            title: track.name,
+            artist: track.artists.map((artist) => artist.name).join(", "),
+            albumArt: track.album.images[0]?.url,
+            trackId: track.id, // Ensure each track has a unique identifier
+            preview_url: track.preview_url,
+          },
+        });
+        setLikedSongs([
+          ...likedSongs,
+          { trackId: track.id, ...track }, // Add the liked track to the state
+        ]);
+        console.log(response.data.message);
+      }
+    } catch (error) {
+      console.error(
+        "Error adding song to liked songs:",
+        error.response?.data || error.message
+      );
     }
   };
 
@@ -162,9 +222,12 @@ export default function SearchResults() {
               <MdSkipNext size={20} />
               Next Song
             </button>
-            <button className="py-2 px-4 flex flex-row gap-3 text-white font-semibold rounded-lg hover:shadow-md ">
-              <AiOutlineHeart size={20} />
-              Add to Liked Songs
+            <button
+              onClick={() => handlelikedclick(currentTrack)}
+              className="py-2 px-4 flex flex-row gap-3 text-white font-semibold rounded-lg hover:shadow-md "
+            >
+              <AiOutlineHeart size={20} color={isTrackLiked ? "red" : ""} />
+              {isTrackLiked ? "Remove from Liked Songs" : "Add to Liked Songs"}
             </button>
           </div>
         </div>
