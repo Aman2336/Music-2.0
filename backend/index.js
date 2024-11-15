@@ -6,15 +6,17 @@ import UserRouter from "./routes/UserRoutes.js";
 import authRouter from "./routes/authRoutes.js";
 import spotifyRouter from "./routes/spotifyRoutes.js";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 
 const app = express();
+app.use(cookieParser());
 app.use(express.json());
 app.use(cors());
 
-app.use(express.json({ limit: '10mb' }));  // For handling JSON bodies with larger sizes
-app.use(express.urlencoded({ limit: '10mb', extended: true }));
+app.use(express.json({ limit: "10mb" })); // For handling JSON bodies with larger sizes
+app.use(express.urlencoded({ limit: "10mb", extended: true }));
 mongoose
   .connect(process.env.mongo)
   .then(() => {

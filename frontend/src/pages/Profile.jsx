@@ -1,6 +1,50 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useState, useEffect } from "react";
+import {
+  updatestart,
+  updatesuccess,
+  updatefailure,
+} from "../redux/user/userSlice.js";
+import { current } from "@reduxjs/toolkit";
 export default function Profile() {
+  const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
+
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+  });
+
+  useEffect(() => {
+    if (currentUser) {
+      setFormData({
+        username: currentUser.username || "",
+        email: currentUser.email || "",
+      });
+    }
+  }, [currentUser]);
+  console.log(formData);
+  const handlesubmit = async (e) => {
+    e.preventDefault();
+    try {
+      dispatch(updatestart());
+      const res = await fetch(`backend/user/update/${currentUser._id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(updatefailure(data.message));
+        return;
+      }
+      dispatch(updatesuccess(data));
+    } catch (error) {
+      dispatch(updatefailure(error.message));
+    }
+  };
   return (
     <div className="bg-gradient-to-b from-[#1E1E2C] to-[#0D0D15] min-h-screen p-5 flex flex-col items-center justify-center">
       <div className="relative flex flex-col md:flex-row w-full md:w-[90%] h-[90vh] bg-gradient-to-b from-[#1E1E2C] to-[#0D0D15] text-white rounded-lg shadow-[#12121c] shadow-2xl overflow-hidden">
@@ -22,7 +66,7 @@ export default function Profile() {
           {/* Profile Form */}
           <div className="w-full md:w-1/2 px-10 py-8">
             <h1 className="text-5xl font-semibold text-center mb-4">Profile</h1>
-            <form className="space-y-6 flex flex-col">
+            <form onSubmit={handlesubmit} className="space-y-6 flex flex-col">
               <img
                 className="rounded-full self-center w-24 h-24"
                 src={currentUser?.photo}
@@ -33,6 +77,10 @@ export default function Profile() {
                 type="text"
                 id="username"
                 placeholder="username"
+                value={formData.username}
+                onChange={(e) =>
+                  setFormData({ ...formData, username: e.target.value })
+                }
                 className="w-full p-4 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-[#00FFAB]"
               />
 
@@ -40,8 +88,18 @@ export default function Profile() {
                 type="email"
                 id="email"
                 placeholder="email"
+                value={formData.email}
+                onChange={(e) => {
+                  setFormData({ ...formData, email: e.target.value });
+                }}
                 className="w-full p-4 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-[#00FFAB]"
               />
+              <button
+                type="submit"
+                className="w-full bg-gradient-to-r from-[#00FFAB] to-[#00D1FF] text-gray-900 py-4 rounded-lg font-semibold hover:from-[#00D1FF] hover:to-[#00FFAB] transition transform hover:scale-105"
+              >
+                Update
+              </button>
             </form>
             <div className="mt-6  justify-between flex gap-2">
               <button className="text-[#00FFAB] hover:underline text-sm">

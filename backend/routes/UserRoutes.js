@@ -3,11 +3,14 @@ import {
   likedsongs,
   removelikedsongs,
   test,
+  updateUser,
 } from "../controller/user.controller.js";
 import User from "../model/UserSchema.js";
+import { verifyToken } from "../utils/verifyUser.js";
 const router = express.Router();
 
 router.get("/test", test);
+router.post("/update/:id", verifyToken, updateUser);
 router.get("/liked-songs/:userId", async (req, res) => {
   const { userId } = req.params;
   try {

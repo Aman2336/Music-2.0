@@ -52,3 +52,24 @@ export const removelikedsongs = async (req, res) => {
     res.status(500).json({ message: "An error occurred", error: err.message });
   }
 };
+
+export const updateUser = async (req, res, next) => {
+  if (req.user.id !== req.params.id)
+    return next(errorhandler(403, "you can update your account"));
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: {
+          username: req.body.username,
+          email: req.body.email,
+        },
+      },
+      { new: true }
+    );
+    const data = updatedUser._doc;
+    res.status(200).json(data);
+  } catch (err) {
+    next(err);
+  }
+};
