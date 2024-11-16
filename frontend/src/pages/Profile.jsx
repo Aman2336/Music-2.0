@@ -4,6 +4,12 @@ import {
   updatestart,
   updatesuccess,
   updatefailure,
+  deletesuccess,
+  deletestart,
+  deletefailure,
+  signoutstart,
+  signoutsuccess,
+  signoutfailure,
 } from "../redux/user/userSlice.js";
 import { current } from "@reduxjs/toolkit";
 export default function Profile() {
@@ -45,6 +51,47 @@ export default function Profile() {
       dispatch(updatefailure(error.message));
     }
   };
+  //handling delete account
+  const handledelete = async () => {
+    try {
+      dispatch(deletestart());
+      const res = await fetch(`/backend/user/delete/${currentUser._id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(deletefailure(data));
+        return;
+      }
+      dispatch(deletesuccess(data));
+    } catch (error) {
+      dispatch(deletefailure(error.message));
+    }
+  };
+
+  const handlesignout = async () => {
+    try {
+      dispatch(signoutstart());
+      const res = await fetch("backend/auth/signout");
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(signoutfailure(data.message));
+        return;
+      }
+      dispatch(signoutsuccess(data));
+    } catch (error) {
+      console.log(error.message);
+      dispatch(signoutfailure(error.message));
+    }
+  };
+  const [likedsongs, setlikedsongs] = useState([]);
+  useEffect(() =>{
+    setlikedsongs(currentUser?.likedSongs || []);
+  },[currentUser]);
+  const [ toggle,settoggle] = useState(false);
+  const handleshowlikedsongs=()=>{
+    settoggle(true);
+  }
   return (
     <div className="bg-gradient-to-b from-[#1E1E2C] to-[#0D0D15] min-h-screen p-5 flex flex-col items-center justify-center">
       <div className="relative flex flex-col md:flex-row w-full md:w-[90%] h-[90vh] bg-gradient-to-b from-[#1E1E2C] to-[#0D0D15] text-white rounded-lg shadow-[#12121c] shadow-2xl overflow-hidden">
@@ -102,13 +149,21 @@ export default function Profile() {
               </button>
             </form>
             <div className="mt-6  justify-between flex gap-2">
-              <button className="text-[#00FFAB] hover:underline text-sm">
+              <button
+                onClick={handledelete}
+                className="text-[#00FFAB] hover:underline text-sm"
+              >
                 Delete Account
               </button>
-              <button className="text-[#00FFAB] hover:underline text-sm">
+              <button
+                onClick={handlesignout}
+                className="text-[#00FFAB] hover:underline text-sm"
+              >
                 Sign Out
               </button>
             </div>
+            <span onclick={handleshowlikedsongs}>Show Liked Songs</span>
+          
           </div>
         </div>
       </div>
