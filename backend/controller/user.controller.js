@@ -35,10 +35,10 @@ export const removelikedsongs = async (req, res) => {
   const { userId, trackId } = req.body;
 
   try {
-    // Find the user and remove the track from likedSongs
+    // Find the user and remove the track from likedSongs by matching trackId
     const user = await User.findByIdAndUpdate(
       userId,
-      { $pull: { likedSongs: { trackId } } },
+      { $pull: { likedSongs: { trackId: trackId } } }, // Match trackId inside each likedSong object
       { new: true }
     );
 
@@ -46,7 +46,13 @@ export const removelikedsongs = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    res.status(200).json({ message: "Song removed from liked songs", user });
+    // Send the updated list of liked songs back to the client
+    res
+      .status(200)
+      .json({
+        message: "Song removed from liked songs",
+        likedSongs: user.likedSongs,
+      });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "An error occurred", error: err.message });

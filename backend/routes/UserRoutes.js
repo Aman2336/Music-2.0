@@ -30,5 +30,5 @@ router.get("/liked-songs/:userId", async (req, res) => {
 }); //for rendering the liked songs for the current user on reload
 router.post("/like-song", likedsongs);
 router.post("/remove-like", removelikedsongs);
-router.delete("/delete/:id",verifyToken,deleteuser);
+router.delete("/delete/:id", verifyToken, deleteuser);
 export default router;
