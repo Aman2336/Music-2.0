@@ -33,7 +33,7 @@ export const likedsongs = async (req, res) => {
 
 export const removelikedsongs = async (req, res) => {
   const { userId, trackId } = req.body;
-
+  console.log(userId);
   try {
     // Find the user and remove the track from likedSongs by matching trackId
     const user = await User.findByIdAndUpdate(
