@@ -89,10 +89,25 @@ export default function Profile() {
   const [likedsongs, setlikedsongs] = useState([]);
 
   useEffect(() => {
-    setlikedsongs(currentUser?.likedSongs || []);
-  }, [currentUser]);
+    const fetchLikedSongs = async () => {
+      try {
+        const response = await axios.get(
+          `/backend/user/liked-songs/${currentUser?._id}`
+        );
+        setlikedsongs(response.data.likedSongs); // Populate the liked songs from the backend
+      } catch (error) {
+        console.error("Error fetching liked songs:", error);
+      }
+    };
+
+    if (currentUser?._id) {
+      fetchLikedSongs();
+    }
+  }, [currentUser?._id]);
+
 
   const [toggle, settoggle] = useState(false);
+
   const handleshowlikedsongs = () => {
     console.log(likedsongs);
     settoggle(true);

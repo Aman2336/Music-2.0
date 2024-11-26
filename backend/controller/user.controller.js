@@ -47,12 +47,11 @@ export const removelikedsongs = async (req, res) => {
     }
 
     // Send the updated list of liked songs back to the client
-    res
-      .status(200)
-      .json({
-        message: "Song removed from liked songs",
-        likedSongs: user.likedSongs,
-      });
+    res.status(200).json({
+      success: true,
+      message: "Song removed from liked songs",
+      likedSongs: user.likedSongs,
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "An error occurred", error: err.message });
