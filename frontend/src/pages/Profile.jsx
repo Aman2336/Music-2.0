@@ -109,7 +109,6 @@ export default function Profile() {
   const [toggle, settoggle] = useState(false);
 
   const handleshowlikedsongs = () => {
-    console.log(likedsongs);
     settoggle(true);
   };
 
