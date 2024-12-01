@@ -1,21 +1,54 @@
+import { Typewriter } from "react-simple-typewriter";
 import { Link } from "react-router-dom";
+import "../../src/styles/heading.css";
+import { useRef } from "react";
+import { FaCompactDisc } from "react-icons/fa";
 
 export default function Home() {
+  const moodDetectorRef = useRef(null);
+
+  // Function to scroll to the Mood Detector section
+  const scrollToMoodDetector = () => {
+    moodDetectorRef.current.scrollIntoView({ behavior: "smooth" });
+  };
   return (
     <div className="bg-gradient-to-b from-[#1E1E2C] to-[#0D0D15] min-h-screen p-5 flex flex-col items-center">
       {/* Hero Section */}
-      <h1 className="text-[#EAEAEA] text-5xl font-bold mb-6">
-        Welcome to <span className="text-[#8A2BE2]">Moodify</span>
+      <h1 className="neon-title text-6xl md:text-8xl font-bold mb-6 fade-in-animation">
+        Welcome to <br></br>
+        <span className="text-[#8A2BE2]">Moodify</span>
       </h1>
-      <p className="text-[#A9A9A9] text-lg mb-8 max-w-3xl text-center">
-        Your personalized music companion. Discover songs, artists, and
-        playlists that perfectly match your mood. Tune in to every genre, vibe,
-        and moment.
-      </p>
 
-      <button className="bg-[#8A2BE2] text-white py-3 px-6 rounded-lg text-lg font-medium shadow-lg transition-transform duration-300 hover:scale-110 hover:bg-[#3A6EA5]">
-        Get Started
-      </button>
+      {/* React-Typed Animation */}
+      <div
+        className="text-[#A9A9A9] text-lg mb-8 max-w-3xl text-center"
+        style={{
+          height: "40px", // Adjust this to fit the tallest text in your animation
+          overflow: "hidden",
+        }}
+      >
+        <Typewriter
+          words={[
+            "Your personalized music companion.",
+            "Discover songs, artists, and playlists that perfectly match your mood.",
+            "Tune in to every genre, vibe, and moment.",
+          ]}
+          loop={true}
+          typeSpeed={50}
+          deleteSpeed={30}
+          delaySpeed={1000}
+        />
+      </div>
+
+      <div className="flex items-center space-x-4">
+        <button
+          onClick={scrollToMoodDetector}
+          className="bg-gradient-to-r from-[#8A2BE2] to-[#3A6EA5] text-white gap-2 flex flex-1 py-3 px-6 rounded-lg text-lg font-medium shadow-lg transition-transform duration-300 hover:scale-110 hover:bg-[#3A6EA5]"
+        >
+          Get Started
+          <FaCompactDisc className="text-black text-3xl animate-spin" />
+        </button>
+      </div>
 
       {/* Promotional Section */}
       <div className="mt-12 text-center w-full px-4">
@@ -54,10 +87,10 @@ export default function Home() {
       </div>
 
       {/* Mood Detector Section */}
-      {/* Image Section Below Explore Music */}
-
-      {/* Mood Detector Section */}
-      <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      <div
+        ref={moodDetectorRef}
+        className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 items-center"
+      >
         <img
           src="public/images/audio1.jpg"
           alt="Mood Detector"
@@ -77,8 +110,6 @@ export default function Home() {
             </button>
           </Link>
         </div>
-
-        {/* Slogans Section */}
       </div>
       <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         <div className="text-center">

@@ -145,7 +145,7 @@ export default function Profile() {
         {/* Profile Image Section */}
         <div className="hidden md:flex md:w-1/2 items-center justify-center">
           <img
-            src="/public/images/11.jpg"
+            src="/public/images/audio3.jpg"
             alt="profile Moodify"
             className="object-cover h-full w-full"
           />
@@ -190,7 +190,7 @@ export default function Profile() {
             {/* Update Button */}
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-[#00FFAB] to-[#00D1FF] text-gray-900 py-3 rounded-lg font-semibold hover:from-[#00D1FF] hover:to-[#00FFAB] transform hover:scale-105 transition"
+              className="w-full bg-gradient-to-r from-[#8A2BE2] to-[#3A6EA5] text-white py-3 rounded-lg font-semibold hover:from-[#00D1FF] hover:to-[#00FFAB] transform hover:scale-105 transition"
             >
               Update
             </button>
