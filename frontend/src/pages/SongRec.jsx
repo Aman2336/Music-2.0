@@ -92,7 +92,7 @@ export default function MoodDetection() {
         {/* Tracks section with left connection and rounded right side */}
         {results && results.length > 0 && (
           <div
-            className=" tracks-section  md:max-w-[30%] max-h-[600px] animate-slide-in-left overflow-y-auto bg-gradient-to-b from-[#2A2A3A] to-[#2C2C3A] p-6 rounded-r-lg animate-slide-in-left"
+            className=" tracks-section  md:max-w-[30%] max-h-[600px] text-white animate-slide-in-left overflow-y-auto bg-gradient-to-b from-[#2A2A3A] to-[#2C2C3A] p-6 rounded-r-lg animate-slide-in-left"
             // style={{
             //   borderRadius: "20px", // Rounded on the right side
             // }}

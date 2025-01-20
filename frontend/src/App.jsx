@@ -7,12 +7,14 @@ import SearchResults from "./pages/SearchResults.jsx";
 import Profile from "./pages/Profile.jsx";
 import PrivateRoute from "../routes/PrivateRoute.jsx";
 import SongRec from "./pages/SongRec.jsx";
+import About from "./pages/About.jsx";
 export default function App() {
   return (
     <BrowserRouter>
       <Header />
       <Routes>
         <Route path="/" element={<Home />}></Route>
+        <Route path="/about" element={<About />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/results" element={<SearchResults />}></Route>
         <Route element={<PrivateRoute />}>
